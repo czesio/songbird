@@ -1,0 +1,60 @@
+easy_admin:
+    entities:
+        User:
+            class: AppBundle\Entity\User
+            label: admin.link.user_management
+#            role: ROLE_USER
+            # for new user
+            new:
+#                role: ROLE_ADMIN
+                fields:
+                  - username
+                  - firstname
+                  - lastname
+                  - { property: 'plainPassword', type: 'repeated', type_options: { type: 'Symfony\Component\Form\Extension\Core\Type\PasswordType', first_options: {label: 'Password'}, second_options: {label: 'Repeat Password'}, invalid_message: 'The password fields must match.'}}
+                  - { property: 'email', type: 'email', type_options: { trim: true } }
+#                  - { property: 'imageFile', type: 'vich_image' }
+                  - roles
+                  - enabled
+            edit:
+#                role: ROLE_ADMIN
+                fields:
+                - username
+                - firstname
+                - lastname
+                - { property: 'plainPassword', type: 'repeated', type_options: { type: 'Symfony\Component\Form\Extension\Core\Type\PasswordType', required: false, first_options: {label: 'Password'}, second_options: {label: 'Repeat Password'}, invalid_message: 'The password fields must match.'}}
+                - { property: 'email', type: 'email', type_options: { trim: true } }
+#                - { property: 'imageFile', type: 'vich_image' }
+                - roles
+                - enabled
+            show:
+#                role: ROLE_ADMIN
+                fields:
+                - id
+#                - { property: 'image', type: 'image', base_path: '%app.profile_image.path%'}
+                - username
+                - firstname
+                - lastname
+                - email
+                - roles
+                - enabled
+                - { property: 'last_login', type: 'datetime' }
+                - modified
+                - created
+            list:
+#                role: ROLE_USER
+                title: 'User Listing'
+                actions: ['show']
+                fields:
+                  - id
+#                  - { property: 'image', type: 'image', base_path: '%app.profile_image.path%'}
+                  - username
+                  - email
+                  - firstname
+                  - lastname
+                  - enabled
+                  - roles
+                  - { property: 'last_login', type: 'datetime' }
+            delete:
+#                role: ROLE_ADMIN
+
