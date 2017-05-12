@@ -39,6 +39,7 @@ class AppSubscriber implements EventSubscriberInterface
             EasyAdminEvents::PRE_SHOW => 'checkUserRights',
             EasyAdminEvents::PRE_NEW => 'checkUserRights',
             EasyAdminEvents::PRE_DELETE => 'checkUserRights',
+            FOSUserEvents::RESETTING_RESET_SUCCESS => 'redirectUserAfterPasswordReset'
         );
     }
 
@@ -77,4 +78,15 @@ class AppSubscriber implements EventSubscriberInterface
 
     }
 
+    /**
+     * Redirect user to another page after password reset is success
+     *
+     * @param  Configure $event GetResponseUserEvent
+     * @return null
+     */
+    public function redirectUserAfterPasswordReset(FormEvent $event)
+    {
+        $url = $this->container->get('router')->generate('admin');
+        $event->setResponse(new RedirectResponse($url));
+    }
 }

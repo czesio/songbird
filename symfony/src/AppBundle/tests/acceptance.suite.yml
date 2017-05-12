@@ -19,4 +19,7 @@ modules:
              capabilities:
                  unexpectedAlertBehaviour: 'accept'
                  webStorageEnabled: true
+         - MailCatcher:
+             url: 'http://172.25.0.6'
+             port: '1080'
          - \Helper\Acceptance
