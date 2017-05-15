@@ -7,7 +7,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="generator" content="EasyAdmin" />
 
-        <title>{% block page_title %}{{ block('content_title')|striptags|raw }}{% endblock %}</title>
+        <title>{% block page_title %}{{ 'dashboard.welcome.title' | trans({}, 'app') }}{% endblock %}</title>
 
         {% block head_stylesheets %}
             <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/easyadmin-all.min.css') }}">
@@ -54,6 +54,8 @@
         <![endif]-->
     </head>
 
+    {% set urlPrefix = (app.environment == 'dev') ? '/app_dev.php/' : '/' %}
+
     {% block body %}
     <body id="{% block body_id %}{% endblock %}" class="easyadmin sidebar-mini {% block body_class %}{% endblock %} {{ app.request.cookies.has('_easyadmin_navigation_iscollapsed') ? 'sidebar-collapse' }}">
         <div class="wrapper">
@@ -79,7 +81,13 @@
                         <ul class="nav navbar-nav">
                             <li class="dropdown user user-menu">
                                 {% block user_menu %}
-                                    <span class="sr-only">{{ 'user.logged_in_as'|trans(domain = 'EasyAdminBundle') }}</span>
+                                    <i class="fa fa-language" aria-hidden="true">
+                                        <select id="lang" name="lang">
+                                            {% for lang in supported_lang %}
+                                                <option value="{{ lang }}">{{ lang }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </i>
                                     <i class="hidden-xs fa fa-user">
                                         {% if app.user %}
                                             <a href="{{ path('easyadmin') }}/?entity=User&action=show&id={{ app.user.id }}">{{ app.user.username|default('user.unnamed'|trans(domain = 'EasyAdminBundle')) }}</a>
@@ -87,7 +95,7 @@
                                             {{ 'user.anonymous'|trans(domain = 'EasyAdminBundle') }}
                                         {% endif %}
                                     </i>
-                                    <i class="hidden-xs fa fa-sign-out"><a href="{{ path('fos_user_security_logout') }}">Logout</a></i>
+                                    <i class="hidden-xs fa fa-sign-out"><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></i>
                                 {% endblock user_menu %}
                             </li>
                         </ul>
@@ -141,7 +149,15 @@
         </div>
 
         {% block body_javascript %}{% endblock body_javascript %}
-
+        <script>
+            // select the box based on locale
+            var lang = document.getElementById('lang');
+            lang.value = '{{ app.request.getLocale() }}';
+            // redirect user if user change locale
+            lang.addEventListener('change', function () {
+                window.location = '{{ urlPrefix }}' + document.getElementById('lang').value + '/locale';
+            });
+        </script>
         {% for js_asset in easyadmin_config('design.assets.js') %}
             <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}

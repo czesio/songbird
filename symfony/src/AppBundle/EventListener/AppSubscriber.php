@@ -39,11 +39,16 @@ class AppSubscriber implements EventSubscriberInterface
             EasyAdminEvents::PRE_SHOW => 'checkUserRights',
             EasyAdminEvents::PRE_NEW => 'checkUserRights',
             EasyAdminEvents::PRE_DELETE => 'checkUserRights',
-            FOSUserEvents::RESETTING_RESET_SUCCESS => 'redirectUserAfterPasswordReset'
+            FOSUserEvents::RESETTING_RESET_SUCCESS => 'redirectUserAfterPasswordReset',
+            //KernelEvents::REQUEST => array('test', 18)
+
         );
     }
 
 
+    //public function test(GetResponseEvent $event) {
+        //var_dump($event->getRequest()->getQueryString());
+    //}
     /**
      * show an error if user is not superadmin and tries to manage restricted stuff
      *
