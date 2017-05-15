@@ -5,7 +5,10 @@ app:
 easy_admin_bundle:
     resource: "@AppBundle/Controller/AdminController.php"
     type:     annotation
-    prefix:   /admin
+    prefix:   /%admin_path%
+
+homepage:
+    path:   /%admin_path%
 
 # FOS user bundle default routing
 fos_user_security:

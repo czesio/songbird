@@ -1,6 +1,7 @@
 <?php
 namespace As_Test1_User;
 use \AcceptanceTester;
+use \Common;
 
 class IWantToLoginCest
 {
@@ -32,8 +33,18 @@ class IWantToLoginCest
         $I->waitForText('Invalid credentials');
     }
 
-    // tests
-    public function tryToTest(AcceptanceTester $I)
+    /**
+     * GIVEN See my dashboard content
+     * WHEN I login correctly
+     * THEN I should see the text "User Management" and should see the text "Dear test1"
+     *
+     * Scenario 10.1.2
+     * @before login
+     */
+    public function seeMyDashboardContent(AcceptanceTester $I)
     {
+        $I->canSeeInCurrentUrl('/admin/dashboard');
+        $I->canSee('Dear test1');
+        //$I->canSee('User Management');
     }
 }
