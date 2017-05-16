@@ -1,7 +1,8 @@
 #!/bin/bash
 rm -rf var/cache/*
-# scripts/console cache:clear --no-warmup
+#scripts/console cache:clear --no-warmup
 scripts/console doctrine:database:drop --force
 scripts/console doctrine:database:create
 scripts/console doctrine:schema:create
-scripts/console doctrine:fixtures:load -n
+scripts/console doctrine:fixtures:load
+cp src/AppBundle/tests/_data/test_profile.jpg web/uploads/profiles/ -n

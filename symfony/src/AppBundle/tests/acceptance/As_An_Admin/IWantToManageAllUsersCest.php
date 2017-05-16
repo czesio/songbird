@@ -19,24 +19,33 @@ class IWantToManageAllUsersCest
     }
 
     /**
+     * GIVEN List all profiles
+     * WHEN I go to "/admin/?action=list&entity=User" url
+     * THEN I should see a list of all users in a table with image fields
+     *
      * Scenario 10.6.1
      * @before login
      */
     public function listAllProfiles(AcceptanceTester $I)
     {
-        $I->amOnPage('/admin/?action=list&entity=User');
-        // the magic of xpath
-        $I->canSeeNumberOfElements('//table/tbody/tr',4);
+        $I->click('User Management');
+        $I->canSeeNumberOfElements('//table/tbody/tr', 4);
+        $I->seeNumberOfElements('//td[@data-label="Image"]', 4);
     }
 
     /**
+     * GIVEN Show test3 user
+     * WHEN I go to "/admin/?action=show&entity=User&id=4" url
+     * THEN I should see test3 user details
+     *
      * Scenario 10.6.2
      * @before login
      */
     public function showTest3User(AcceptanceTester $I)
     {
        // go to user listing page
-       $I->amOnPage('/admin/?action=list&entity=User');
+       //$I->amOnPage('/admin/?action=list&entity=User');
+       $I->click('User Management');
        // click on show button
        $I->click('Show');
        $I->waitForText('test3@songbird.app');
@@ -50,7 +59,8 @@ class IWantToManageAllUsersCest
     public function editTest3User(AcceptanceTester $I)
     {
         // go to user listing page
-        $I->amOnPage('/admin/?action=list&entity=User');
+        // $I->amOnPage('/admin/?action=list&entity=User');
+        $I->click('User Management');
         // click on edit button
         $I->click('Edit');
         // check we are on the right url
@@ -59,7 +69,8 @@ class IWantToManageAllUsersCest
         // update
         $I->click('//button[@type="submit"]');
         // go back to listing page
-        $I->amOnPage('/admin/?action=list&entity=User');
+        $I->click('User Management');
+        //$I->amOnPage('/admin/?action=list&entity=User');
         $I->canSee('lastname3 updated');
         // now revert username
         $I->amOnPage('/admin/?action=edit&entity=User&id=4');

@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * User
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class User extends BaseUser
 {
@@ -46,6 +49,18 @@ class User extends BaseUser
  	 * @ORM\Column(type="datetime")
 	 */
 	private $created;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $image = '';
+
+    /**
+     * @Vich\UploadableField(mapping="profile_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
 
 	/**
      * @ORM\PrePersist
@@ -194,5 +209,38 @@ class User extends BaseUser
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * @param File|null $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        // at least 1 field needs to change for doctrine to save
+        if ($image) {
+            $this->setModified(new \DateTime());
+        }
+    }
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+    /**
+     * @param $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

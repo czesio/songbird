@@ -12,3 +12,11 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=172.25.0.2;dbname=songbird'
+            user: 'root'
+            password: 'root'
+            dump: tests/_data/dump.sql
+            populate: false
