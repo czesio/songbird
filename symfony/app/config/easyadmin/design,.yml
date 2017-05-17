@@ -7,3 +7,4 @@ easy_admin:
         menu:
              - { label: 'Dashboard', route: 'dashboard', default: true }
              - { entity: 'User', icon: 'user', role: ROLE_USER }
+             - { entity: 'UserLog', icon: 'log', role: ROLE_ADMIN }

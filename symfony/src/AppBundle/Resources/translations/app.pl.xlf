@@ -28,9 +28,13 @@
                 <source>dashboard.dear</source>
                 <target>Drogi</target>
             </trans-unit>
-            <trans-unit id="7">
+            <trans-unit id="8">
                 <source>Dashboard</source>
                 <target>Panel</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>admin.link.user_log</source>
+                <target>Logi użytkownika</target>
             </trans-unit>
         </body>
     </file>
